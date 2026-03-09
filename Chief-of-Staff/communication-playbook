@@ -1,0 +1,136 @@
+# Communication Playbook
+
+## When to Use
+Drafting emails, Slack messages, Teams messages, or any written communication on behalf of the principal. This includes replies, cold outreach, escalation notifications, thank-you notes, meeting follow-ups, and internal announcements.
+
+## Step 1: Classify the Communication
+
+Before drafting, determine the situation type and audience:
+
+| Situation | Tone | Length |
+|-----------|------|--------|
+| Customer escalation response | Empathetic, confident, specific | Medium (3-5 paragraphs) |
+| Leadership update | Concise, data-driven, "so what" first | Short (2-3 paragraphs) |
+| Team announcement | Direct, celebratory or action-oriented | Short |
+| Meeting follow-up | Appreciative, action-item focused | Medium |
+| Vendor/partner communication | Professional, clear expectations | Medium |
+| Difficult conversation (bad news, delay, pushback) | Empathetic lead, honest middle, forward-looking close | Medium-Long |
+| Cold outreach / introduction | Value-first, specific to recipient | Very short |
+| Internal escalation (asking for help) | Crisp context, clear ask, urgency level | Short |
+
+## Step 2: Apply the Communication Framework
+
+### Structure for All Messages
+
+1. **Opening**: One sentence establishing context. Never start with "I hope this email finds you well."
+2. **The Point**: What do you need the reader to know or do? Lead with this.
+3. **Supporting Context**: Only what's necessary to understand the point. Ruthlessly trim.
+4. **Clear Ask / Next Step**: What happens next and who owns it.
+5. **Closing**: Brief, warm, appropriate to relationship.
+
+### Customer Communication Rules
+
+- **Never blame the product.** Frame issues as situations being resolved, not defects.
+- **Never promise timelines you can't control.** Say "we're targeting" or "our goal is" rather than "we will have this by."
+- **Always include what's already been done.** Customers want to know you're in motion, not just planning.
+- **Name specific people.** "Kendrick from our engineering team is building the solution" is 10x more reassuring than "our team is working on it."
+- **Reference similar successes.** "This is the same configuration running in Austin" builds confidence.
+
+### Internal Communication Rules
+
+- **State the ask in the first two sentences.** Busy people read the top of an email and nothing else.
+- **Use bold for action items and deadlines.** Make them impossible to miss.
+- **Signal urgency explicitly.** Don't bury "I need this by 3pm" in paragraph four.
+- **CC thoughtfully.** Only include people who need to act or be aware. Explain why you're looping someone in.
+
+## Step 3: Generate Output
+
+Use the `message_compose` tool when drafting emails, Slack, or text messages. Provide multiple variants when the situation is high-stakes or ambiguous:
+
+- **2-3 variants** for: customer escalations, difficult conversations, pushback scenarios, negotiations
+- **1 variant** for: routine follow-ups, internal updates, simple asks, thank-you notes
+
+### Variant Strategy
+
+When providing multiple variants, each should represent a **different strategic approach**, not just a different tone:
+
+| Strategy | When to Use |
+|----------|-------------|
+| **Direct / Hold firm** | When the principal's position is correct and needs to be defended |
+| **Collaborative / Build bridge** | When preserving the relationship matters more than winning the point |
+| **Escalate gracefully** | When the principal needs to elevate without burning bridges |
+| **Buy time** | When more information is needed before committing |
+| **Acknowledge and redirect** | When the complaint is valid but the request isn't feasible |
+
+## Step 4: Follow-Up Questions
+
+After drafting, always ask:
+- Is the tone right for your relationship with this person?
+- Should anyone be CC'd or BCC'd?
+- Is there additional context the recipient needs that I don't have?
+- Do you want me to draft the follow-up for the next step referenced in this message?
+
+## Templates by Situation
+
+### Customer Escalation Response
+
+```
+Subject: [Customer Name] — [Issue] Resolution Update
+
+[Name],
+
+I want to give you a direct update on [issue]. [One sentence on what's happening.]
+
+[What we've already done — specific names and actions.]
+
+[What happens next — specific timeline and owner.]
+
+[Reassurance — reference deployment or proof point if available.]
+
+I'll follow up [when] with [what]. In the meantime, [any interim action they should take].
+
+[Warm close],
+[Name]
+```
+
+### Internal "I Need Help" Escalation
+
+```
+Subject: [Urgency Level] — Need [what] by [when] for [why]
+
+Team,
+
+**Ask**: [Exactly what you need, from whom, by when.]
+
+**Context**: [2-3 sentences max on why this matters.]
+
+**What I've already done**: [So they know you're not just dumping.]
+
+**Next step**: [What happens after they deliver.]
+
+Thanks — [name]
+```
+
+### Meeting Follow-Up
+
+```
+Subject: Follow-Up — [Meeting Topic] ([Date])
+
+Team,
+
+Thanks for [meeting name]. Here's where we landed:
+
+**Decisions made:**
+- [Decision 1]
+- [Decision 2]
+
+**Action items:**
+- [Owner]: [Task] — due [date]
+- [Owner]: [Task] — due [date]
+
+**Next meeting**: [Date/time, or "to be scheduled by [owner]"]
+
+Let me know if I've missed anything.
+
+[Name]
+```
