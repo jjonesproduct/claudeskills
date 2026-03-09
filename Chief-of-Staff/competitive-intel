@@ -1,0 +1,102 @@
+# Competitive Intelligence
+
+## When to Use
+Researching competitors, responding to competitive threats, creating battle cards, analyzing market positioning, or any "what is [competitor] doing" question.
+
+## Competitive Intel Brief Structure
+
+```
+COMPETITIVE INTELLIGENCE BRIEF
+[Competitor Name] — [Topic/Trigger]
+
+Date: | Classification: Confidential | Distribution: [list]
+
+Executive Summary (2-3 sentences: what happened and why it matters to us)
+
+What We Know
+  - Factual findings from research (sourced)
+  - Product announcements, acquisitions, partnerships
+  - Pricing changes, new market moves
+
+What It Means for Us
+  - Direct competitive impact (which of our products/customers are affected)
+  - Indirect implications (market positioning, narrative shifts)
+  - Customer perception risk
+
+Our Position
+  - Where we're stronger (with evidence)
+  - Where we're vulnerable (honestly)
+  - Key differentiators to emphasize
+
+Recommended Actions
+  - Immediate (this week)
+  - Near-term (this quarter)
+  - Strategic (long-term positioning adjustment)
+
+Sources
+```
+
+## Battle Card Structure
+
+Battle cards are single-page, high-density reference cards for sales and customer-facing teams. Format as a table-heavy, scannable document.
+
+```
+BATTLE CARD — [Competitor] vs CentralSquare
+Last Updated: [Date]
+
+WHO THEY ARE (2 sentences)
+
+THEIR STRENGTHS (bullet list — be honest)
+
+THEIR WEAKNESSES (bullet list — verified, not aspirational)
+
+WHERE WE WIN (specific scenarios, customer types, requirements)
+
+WHERE THEY WIN (specific scenarios — know your weak spots)
+
+KILLER QUESTIONS (questions a sales rep can ask the prospect that highlight our advantage)
+  - "How does [competitor] handle [specific capability we excel at]?"
+  - "Can you see [specific workflow] in their demo?"
+
+LANDMINE TOPICS (things the competitor will say about us — and how to respond)
+  | They Say | You Say |
+
+PROOF POINTS (customer references, case studies, metrics)
+
+PRICING COMPARISON (if known — ranges, not exact unless verified)
+```
+
+## Research Approach
+
+When conducting competitive research:
+
+1. **Use web search** for recent news, press releases, product announcements
+2. **Check their website** for pricing pages, feature lists, case studies
+3. **Look for customer reviews** on G2, Capterra, GovTech forums
+4. **Search for RFP/contract data** in government procurement databases
+5. **Note the date of every source** — competitive intelligence decays fast
+
+## Writing Rules
+
+- **Be factual.** Never speculate about competitor capabilities without evidence. If uncertain, say "unverified" or "reported by [source]."
+- **Be honest about vulnerabilities.** A battle card that says "we win everywhere" is useless. Sales teams need to know where to be careful.
+- **Date everything.** Competitive intelligence has a short shelf life. Every fact should have a source date.
+- **Focus on customer impact.** "They launched feature X" is informative. "They launched feature X, which directly competes with our Atlas mapping in the Tier 2 agency segment" is actionable.
+
+## Public Safety Competitors to Track
+
+Based on the principal's portfolio:
+- Versaterm / Adashi
+- Tyler Technologies (New World)
+- Hexagon Safety & Infrastructure
+- Motorola Solutions (CommandCentral, PremierOne)
+- Mark43
+- Axon (records)
+
+## Follow-Up Questions
+
+- Is this for a specific deal or a general awareness update?
+- Should I create a battle card for the sales team?
+- Are there specific customer conversations where this competitor has come up?
+- Do you want me to set up a recurring competitive watch on this company?
+- Should this be shared with the sales engineering team?
