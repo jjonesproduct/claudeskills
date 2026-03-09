@@ -1,0 +1,118 @@
+# Meeting Prep
+
+## When to Use
+Preparing for customer meetings, leadership reviews, 1:1s, cross-functional syncs, vendor negotiations, demos, or any meeting where the principal needs to walk in prepared.
+
+## Deliverables
+
+Meeting prep can produce one or more of the following depending on the meeting type:
+
+| Deliverable | When to Include |
+|------------|----------------|
+| **Pre-Read Brief** | External meetings, leadership reviews, board meetings |
+| **Agenda** | Meetings the principal is running |
+| **Talking Points** | Customer calls, negotiations, difficult conversations |
+| **Objection Map** | Sales meetings, escalation calls, stakeholder pushback meetings |
+| **Participant Dossier** | First meetings with new contacts, customer executive meetings |
+
+## Pre-Read Brief Structure
+
+```
+PRE-READ BRIEF
+[Meeting Topic] — [Date, Time]
+
+Meeting Context (why is this happening, what's the history)
+
+Participants (name, role, what they care about, relationship to principal)
+
+Key Points to Make (3-5 max, ordered by importance)
+
+Questions to Anticipate (what they'll likely ask, with suggested answers)
+
+Land Mines to Avoid (topics, phrases, or commitments to steer away from)
+
+Desired Outcome (what "success" looks like walking out of this meeting)
+
+Prep Actions (anything to do before the meeting — read X, confirm Y with Z)
+```
+
+## Talking Points Format
+
+Talking points should be scannable mid-meeting. Use this format:
+
+```
+TALKING POINTS — [Topic]
+
+OPEN WITH:
+→ [Opening statement — sets the tone and frame]
+
+KEY MESSAGES:
+→ [Message 1 — most important point]
+  • Supporting fact or example
+→ [Message 2]
+  • Supporting fact or example
+→ [Message 3]
+  • Supporting fact or example
+
+IF THEY ASK ABOUT [sensitive topic]:
+→ [Deflection or reframe]
+
+CLOSE WITH:
+→ [Summary + clear next step + who owns it]
+```
+
+Use arrow (→) for primary points and bullets (•) for supporting details. This creates visual hierarchy that works at a glance.
+
+## Objection Map Format
+
+Two-column table: "They May Say..." | "You Can Say..."
+
+Same pattern as the briefing objection handler, but tailored to the specific meeting context. Include:
+- **Known objections** (from prior conversations or history with this stakeholder)
+- **Likely objections** (based on the topic and their role/interests)
+- **Worst-case objections** (the hardest thing they could say — have a prepared response)
+
+## Participant Dossier
+
+For each participant:
+- **Name and title**
+- **Their stake** (what they care about in this topic)
+- **History with us** (prior meetings, known positions, relationship quality)
+- **Communication style** (if known — data-driven, emotional, detail-oriented, big-picture)
+- **Watch for** (any known sensitivities or pet topics)
+
+This can be a table in the pre-read brief or a standalone section.
+
+## Meeting Type Playbooks
+
+### Customer Escalation Call
+- Pre-read with full issue history
+- Talking points with empathy opening
+- Objection map (heavy — expect frustration)
+- Desired outcome: customer feels heard + agrees to a specific next step
+
+### Leadership / Executive Review
+- Pre-read with metrics and RAG status
+- Talking points focusing on decisions needed
+- Anticipated questions with data-backed answers
+- Desired outcome: alignment on direction + any approvals needed
+
+### Demo / POC Presentation
+- Pre-read with customer's specific pain points mapped to features
+- Talking points as a narrative arc (problem → solution → proof → next step)
+- Objection map for "why should we switch" and "what about [competitor]"
+- Desired outcome: customer agrees to next step (pilot, trial, purchase)
+
+### 1:1 with Direct Report
+- Agenda with their items first
+- Any feedback to deliver (framed constructively)
+- Career development check-in point
+- Blockers to remove for them
+
+## Follow-Up Questions
+
+- Who's the most important person in this meeting and what do they need to hear?
+- Is there anything from a previous meeting that carries over as unfinished business?
+- Are there any topics to explicitly avoid?
+- Should I prepare a follow-up email template for after the meeting?
+- Is there a deck or document being presented that I should review for talking point alignment?
