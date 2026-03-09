@@ -1,0 +1,419 @@
+# Executive Briefing Template
+
+This is the JavaScript template for generating the executive briefing `.docx` file using `docx-js`. Customize the content sections with data extracted from the meeting transcript.
+
+## Setup
+
+```bash
+npm install -g docx
+```
+
+## Template Code
+
+```javascript
+const fs = require("fs");
+const {
+  Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell,
+  Header, Footer, AlignmentType, LevelFormat,
+  HeadingLevel, BorderStyle, WidthType, ShadingType,
+  PageNumber, TabStopType
+} = require("docx");
+
+// ============================================================
+// BRAND COLORS — CentralSquare Identity
+// ============================================================
+const CS_DARK = "1E2A3A";
+const CS_ORANGE = "ED591F";
+const CS_GRAY = "333333";
+const CS_LIGHT_GRAY = "F0F2F5";
+const CS_MID_GRAY = "666666";
+const CS_BORDER = "CCCCCC";
+const CS_ACCENT_BG = "FFF0EB";   // Light orange for recommended option highlight
+const CS_BLUE = "2A7BC8";
+const CS_GREEN = "1B7A3D";       // For positive assessment text
+const CS_WARN_BG = "FFF3CD";     // Yellow for caution assessment cells
+
+// ============================================================
+// SHARED STYLING HELPERS
+// ============================================================
+const border = { style: BorderStyle.SINGLE, size: 1, color: CS_BORDER };
+const borders = { top: border, bottom: border, left: border, right: border };
+const cellMargins = { top: 80, bottom: 80, left: 120, right: 120 };
+
+const headerCellShading = { fill: CS_DARK, type: ShadingType.CLEAR };
+const accentCellShading = { fill: CS_ACCENT_BG, type: ShadingType.CLEAR };
+const lightCellShading = { fill: CS_LIGHT_GRAY, type: ShadingType.CLEAR };
+const warnCellShading = { fill: CS_WARN_BG, type: ShadingType.CLEAR };
+
+// Section header with orange bottom border
+function sectionHeader(text) {
+  return new Paragraph({
+    spacing: { before: 360, after: 120 },
+    border: { bottom: { style: BorderStyle.SINGLE, size: 6, color: CS_ORANGE, space: 4 } },
+    children: [
+      new TextRun({ text, font: "Arial", size: 28, bold: true, color: CS_DARK })
+    ]
+  });
+}
+
+// Standard body paragraph
+function bodyPara(text, opts = {}) {
+  return new Paragraph({
+    spacing: { after: 160, line: 276 },
+    ...opts,
+    children: [
+      new TextRun({ text, font: "Arial", size: 22, color: CS_GRAY })
+    ]
+  });
+}
+
+// Bullet with bold lead-in label
+function boldBulletItem(boldText, normalText, reference = "bullets") {
+  return new Paragraph({
+    numbering: { reference, level: 0 },
+    spacing: { after: 80, line: 276 },
+    children: [
+      new TextRun({ text: boldText, font: "Arial", size: 22, color: CS_DARK, bold: true }),
+      new TextRun({ text: normalText, font: "Arial", size: 22, color: CS_GRAY })
+    ]
+  });
+}
+
+// Sub-label (bold gray, smaller than section header)
+function subLabel(text) {
+  return new Paragraph({
+    spacing: { before: 200, after: 80 },
+    children: [
+      new TextRun({ text, font: "Arial", size: 22, bold: true, color: CS_MID_GRAY })
+    ]
+  });
+}
+
+// Metadata table row (label + value)
+function metaRow(label, value) {
+  return new TableRow({
+    children: [
+      new TableCell({
+        borders, width: { size: 2400, type: WidthType.DXA },
+        shading: lightCellShading, margins: cellMargins,
+        children: [new Paragraph({ children: [new TextRun({ text: label, font: "Arial", size: 20, bold: true, color: CS_DARK })] })]
+      }),
+      new TableCell({
+        borders, width: { size: 6960, type: WidthType.DXA },
+        margins: cellMargins,
+        children: [new Paragraph({ children: [new TextRun({ text: value, font: "Arial", size: 20, color: CS_GRAY })] })]
+      })
+    ]
+  });
+}
+
+// Numbered step with bold lead-in
+function numberedStep(boldText, normalText, reference = "numbers") {
+  return new Paragraph({
+    numbering: { reference, level: 0 },
+    spacing: { after: 80, line: 276 },
+    children: [
+      new TextRun({ text: boldText, font: "Arial", size: 22, bold: true, color: CS_DARK }),
+      new TextRun({ text: normalText, font: "Arial", size: 22, color: CS_GRAY }),
+    ]
+  });
+}
+
+// Objection + Response pair
+function objectionPair(objectionText, responseText) {
+  return [
+    new Paragraph({
+      spacing: { before: 120, after: 40 },
+      children: [
+        new TextRun({ text: "Objection: ", font: "Arial", size: 22, bold: true, italics: true, color: CS_ORANGE }),
+        new TextRun({ text: objectionText, font: "Arial", size: 22, italics: true, color: CS_GRAY }),
+      ]
+    }),
+    new Paragraph({
+      spacing: { after: 160 },
+      indent: { left: 360 },
+      children: [
+        new TextRun({ text: "Response: ", font: "Arial", size: 22, bold: true, color: CS_DARK }),
+        new TextRun({ text: responseText, font: "Arial", size: 22, color: CS_GRAY }),
+      ]
+    }),
+  ];
+}
+
+// ============================================================
+// DOCUMENT STRUCTURE
+// ============================================================
+// 
+// Customize the content below based on transcript analysis.
+// Replace all {{PLACEHOLDER}} values with extracted data.
+//
+// The numbering config uses separate references for each
+// independently-numbered list (numbers, numbers2, numbers3).
+// Each reference auto-increments; a new reference restarts at 1.
+// ============================================================
+
+const doc = new Document({
+  styles: {
+    default: { document: { run: { font: "Arial", size: 22 } } },
+    paragraphStyles: [
+      {
+        id: "Heading1", name: "Heading 1", basedOn: "Normal", next: "Normal", quickFormat: true,
+        run: { size: 36, bold: true, font: "Arial", color: CS_DARK },
+        paragraph: { spacing: { before: 240, after: 200 }, outlineLevel: 0 }
+      },
+    ]
+  },
+  numbering: {
+    config: [
+      {
+        reference: "bullets",
+        levels: [
+          { level: 0, format: LevelFormat.BULLET, text: "\u2022", alignment: AlignmentType.LEFT,
+            style: { paragraph: { indent: { left: 720, hanging: 360 } } } },
+        ]
+      },
+      {
+        reference: "numbers",
+        levels: [
+          { level: 0, format: LevelFormat.DECIMAL, text: "%1.", alignment: AlignmentType.LEFT,
+            style: { paragraph: { indent: { left: 720, hanging: 360 } } } },
+        ]
+      },
+      // Add additional "numbers2", "numbers3" references if you need
+      // multiple independently-numbered lists in the document.
+    ]
+  },
+  sections: [
+    {
+      properties: {
+        page: {
+          size: { width: 12240, height: 15840 },
+          margin: { top: 1440, right: 1440, bottom: 1440, left: 1440 }
+        }
+      },
+      headers: {
+        default: new Header({
+          children: [
+            new Paragraph({
+              border: { bottom: { style: BorderStyle.SINGLE, size: 6, color: CS_ORANGE, space: 4 } },
+              spacing: { after: 0 },
+              children: [
+                new TextRun({ text: "CENTRALSQUARE TECHNOLOGIES", font: "Arial", size: 16, bold: true, color: CS_DARK }),
+                new TextRun({ text: "  |  ", font: "Arial", size: 16, color: CS_BORDER }),
+                new TextRun({ text: "EXECUTIVE BRIEFING \u2014 CONFIDENTIAL", font: "Arial", size: 16, color: CS_ORANGE }),
+              ]
+            })
+          ]
+        })
+      },
+      footers: {
+        default: new Footer({
+          children: [
+            new Paragraph({
+              border: { top: { style: BorderStyle.SINGLE, size: 2, color: CS_BORDER, space: 4 } },
+              tabStops: [{ type: TabStopType.RIGHT, position: 9360 }],
+              children: [
+                new TextRun({ text: "{{FOOTER_TITLE}}", font: "Arial", size: 16, color: CS_MID_GRAY }),
+                new TextRun({ children: ["\t"], font: "Arial" }),
+                new TextRun({ text: "Page ", font: "Arial", size: 16, color: CS_MID_GRAY }),
+                new TextRun({ children: [PageNumber.CURRENT], font: "Arial", size: 16, color: CS_MID_GRAY }),
+              ]
+            })
+          ]
+        })
+      },
+      children: [
+        // ======== TITLE BLOCK ========
+        new Paragraph({
+          spacing: { after: 40 },
+          children: [
+            new TextRun({ text: "EXECUTIVE BRIEFING", font: "Arial", size: 40, bold: true, color: CS_DARK })
+          ]
+        }),
+        new Paragraph({
+          spacing: { after: 280 },
+          children: [
+            new TextRun({ text: "{{SUBTITLE}}", font: "Arial", size: 26, color: CS_ORANGE })
+          ]
+        }),
+
+        // ======== METADATA TABLE ========
+        new Table({
+          width: { size: 9360, type: WidthType.DXA },
+          columnWidths: [2400, 6960],
+          rows: [
+            metaRow("Date", "{{DATE}}"),
+            metaRow("Classification", "{{CLASSIFICATION}}"),
+            metaRow("Customer", "{{CUSTOMER}}"),
+            metaRow("Product", "{{PRODUCT}}"),
+            metaRow("Prepared For", "{{PREPARED_FOR}}"),
+            metaRow("Key Participants", "{{PARTICIPANTS}}"),
+          ]
+        }),
+
+        new Paragraph({ spacing: { after: 80 }, children: [] }),
+
+        // ======== SECTION 1: SUMMARY OF THE ISSUE ========
+        sectionHeader("1. Summary of the Issue"),
+        bodyPara("{{ISSUE_SUMMARY}}"),
+
+        subLabel("Root Cause"),
+        bodyPara("{{ROOT_CAUSE_INTRO}}"),
+        // Add boldBulletItem() calls for each root cause component:
+        // boldBulletItem("Label: ", "Description of this aspect of the root cause."),
+
+        subLabel("Compounding Factor"),
+        bodyPara("{{COMPOUNDING_FACTOR}}"),
+
+        // ======== SECTION 2: OPTIONS EVALUATED ========
+        sectionHeader("2. Possible Fixes Evaluated"),
+
+        // Options comparison table
+        // Build rows dynamically based on the number of options discussed.
+        // Use headerCellShading for the header row.
+        // Use accentCellShading for the recommended option row.
+        // Use warnCellShading for assessment cells with risk/concerns.
+        // Use CS_GREEN color for positive assessment text.
+        //
+        // Column widths: [560, 2200, 3800, 2800] = 9360 total
+        //
+        // See the Robeson County example for the full pattern.
+
+        new Paragraph({ spacing: { after: 80 }, children: [] }),
+
+        // ======== SECTION 3: RESOLUTION PATH ========
+        sectionHeader("3. Resolution Path \u2014 Moving Forward"),
+        bodyPara("{{RESOLUTION_INTRO}}"),
+
+        subLabel("How It Works"),
+        // Add numberedStep() calls for each implementation step:
+        // numberedStep("Step Label: ", "Description of what happens."),
+
+        subLabel("Timeline"),
+        // Timeline table with columns: [3200, 6160]
+        // Header row: Milestone | Target
+        // Data rows: One per milestone
+
+        new Paragraph({ spacing: { after: 80 }, children: [] }),
+
+        // ======== SECTION 4: VALUE POSITIONING ========
+        sectionHeader("4. Customer Conversation \u2014 Value Positioning"),
+        bodyPara("{{VALUE_INTRO}}"),
+
+        subLabel("Key Messaging Framework"),
+        // Add boldBulletItem() calls for each messaging point:
+        // boldBulletItem("Theme: ", "Full talking point."),
+
+        subLabel("Anticipated Objections & Responses"),
+        // Add objectionPair() calls spread into the children array:
+        // ...objectionPair("\u201CCustomer objection text.\u201D", "Your response."),
+
+        subLabel("Reference Deployment"),
+        bodyPara("{{REFERENCE_DEPLOYMENT}}"),
+
+        // ======== CLOSING BLOCK ========
+        new Paragraph({
+          spacing: { before: 400 },
+          border: { top: { style: BorderStyle.SINGLE, size: 2, color: CS_BORDER, space: 8 } },
+          children: []
+        }),
+        new Paragraph({
+          spacing: { before: 120, after: 80 },
+          children: [
+            new TextRun({ text: "PREPARED BY: ", font: "Arial", size: 20, bold: true, color: CS_MID_GRAY }),
+            new TextRun({ text: "{{PREPARED_BY}}", font: "Arial", size: 20, color: CS_GRAY }),
+          ]
+        }),
+        new Paragraph({
+          spacing: { after: 80 },
+          children: [
+            new TextRun({ text: "SOURCE: ", font: "Arial", size: 20, bold: true, color: CS_MID_GRAY }),
+            new TextRun({ text: "{{SOURCE}}", font: "Arial", size: 20, color: CS_GRAY }),
+          ]
+        }),
+        new Paragraph({
+          spacing: { after: 80 },
+          children: [
+            new TextRun({ text: "DISTRIBUTION: ", font: "Arial", size: 20, bold: true, color: CS_MID_GRAY }),
+            new TextRun({ text: "{{DISTRIBUTION}}", font: "Arial", size: 20, color: CS_GRAY }),
+          ]
+        }),
+      ]
+    }
+  ]
+});
+
+// ============================================================
+// GENERATE AND SAVE
+// ============================================================
+Packer.toBuffer(doc).then(buffer => {
+  fs.writeFileSync("/home/claude/{{FILENAME}}_Executive_Briefing.docx", buffer);
+  console.log("Executive briefing created.");
+});
+```
+
+## Validation
+
+After generating, always validate:
+
+```bash
+python /mnt/skills/public/docx/scripts/office/validate.py {{FILENAME}}_Executive_Briefing.docx
+```
+
+## Key Patterns
+
+### Options Table
+
+Each row in the options table uses this structure. The recommended option gets `accentCellShading` on all cells and a `"\u2713 RECOMMENDED"` label:
+
+```javascript
+new TableRow({
+  children: [
+    new TableCell({ borders, width: { size: 560, type: WidthType.DXA }, margins: cellMargins,
+      shading: isRecommended ? accentCellShading : undefined,
+      children: [new Paragraph({ children: [new TextRun({ text: "A", font: "Arial", size: 20, bold: true, color: CS_ORANGE })] })] }),
+    new TableCell({ borders, width: { size: 2200, type: WidthType.DXA }, margins: cellMargins,
+      shading: isRecommended ? accentCellShading : undefined,
+      children: [
+        new Paragraph({ children: [new TextRun({ text: optionName, font: "Arial", size: 20, bold: true, color: CS_DARK })] }),
+        // Only for recommended:
+        ...(isRecommended ? [new Paragraph({ spacing: { before: 60 }, children: [
+          new TextRun({ text: "\u2713 RECOMMENDED", font: "Arial", size: 18, bold: true, color: CS_ORANGE })
+        ] })] : []),
+      ] }),
+    // ... description and assessment cells
+  ]
+})
+```
+
+### Objection Pairs
+
+Use the `objectionPair()` helper. It returns an array of two paragraphs, so spread it:
+
+```javascript
+...objectionPair(
+  "\u201CCustomer's exact concern in their voice.\u201D",
+  "Empathetic but firm response with specific evidence."
+),
+```
+
+### Timeline Table
+
+Standard two-column table with dark header:
+
+```javascript
+new Table({
+  width: { size: 9360, type: WidthType.DXA },
+  columnWidths: [3200, 6160],
+  rows: [
+    // Header
+    new TableRow({ children: [
+      new TableCell({ borders, width: { size: 3200, type: WidthType.DXA }, shading: headerCellShading, margins: cellMargins,
+        children: [new Paragraph({ children: [new TextRun({ text: "Milestone", font: "Arial", size: 20, bold: true, color: "FFFFFF" })] })] }),
+      new TableCell({ borders, width: { size: 6160, type: WidthType.DXA }, shading: headerCellShading, margins: cellMargins,
+        children: [new Paragraph({ children: [new TextRun({ text: "Target", font: "Arial", size: 20, bold: true, color: "FFFFFF" })] })] }),
+    ] }),
+    // Data rows...
+  ]
+})
+```
