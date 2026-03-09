@@ -1,0 +1,81 @@
+# Action Item Tracker
+
+## When to Use
+Extracting action items from meetings, transcripts, or email threads. Creating accountability trackers. Following up on outstanding commitments. Also use when the principal asks "what did we agree to" or "who owes what."
+
+## Extraction Rules
+
+When parsing a transcript or discussion for action items, look for:
+
+- **Explicit assignments**: "Jimmy, can you handle X" / "I'll take care of Y"
+- **Commitments with dates**: "by tomorrow morning" / "before the customer call"
+- **Conditional actions**: "if the customer agrees, then we'll need to..."
+- **Implied ownership**: "we need someone to..." (flag as unassigned)
+- **Follow-up triggers**: "let's reconvene if..." / "circle back after..."
+
+For every action item, capture:
+
+| Field | Description |
+|-------|-------------|
+| **Action** | Specific, actionable task (verb-first) |
+| **Owner** | Single person responsible (never "the team") |
+| **Due Date** | Specific date or relative (e.g., "before customer meeting") |
+| **Status** | Not Started / In Progress / Complete / Blocked |
+| **Dependencies** | What needs to happen first or in parallel |
+| **Source** | Where this was agreed (meeting name, date, context) |
+| **Notes** | Any relevant context or constraints |
+
+## Tracker Document Structure
+
+```
+ACTION ITEM TRACKER
+[Source Meeting / Project] — [Date]
+
+Summary: [X] total items | [Y] in progress | [Z] complete | [W] blocked
+
+Action Item Table (full-width, sortable by owner or due date)
+  #  | Action | Owner | Due | Status | Dependencies | Notes
+
+Blocked Items (called out separately if any exist)
+  - [Item] — Blocked because [reason] — Needs [who/what] to unblock
+
+Upcoming Deadlines (items due in the next 48 hours, highlighted)
+
+Unassigned Items (flagged for the principal to assign)
+```
+
+## Table Format
+
+7-column table: # | Action | Owner | Due | Status | Dependencies | Notes
+
+Column widths: [400, 2800, 1200, 1000, 1000, 1500, 1460] = 9360
+
+Status cell coloring:
+- **Complete**: Green background (#E8F5E9), green text
+- **In Progress**: No special coloring
+- **Blocked**: Red background (#FFEBEE), red text
+- **Not Started**: Light gray background
+
+## Best Practices
+
+- **One owner per item.** If two people are involved, pick the one accountable for completion. The other is a collaborator noted in Dependencies.
+- **Verb-first task descriptions.** "Draft the customer email" not "customer email." "Configure Hub mapping rules" not "Hub mapping."
+- **Flag items without dates.** An action item without a deadline is a wish, not a commitment. Ask the principal to assign dates.
+- **Separate "do" from "decide."** "Decide whether to offer a discount" and "send the discount proposal" are two different items with potentially different owners.
+- **Include "wait for" items.** If we're waiting on the customer or another team, track that as an item with status "Blocked" and the dependency clearly noted.
+
+## Integration with Jira
+
+When the principal wants action items pushed to Jira:
+1. Confirm the project key and issue type (Task, Story, Bug)
+2. Map each action item to a Jira issue
+3. Use the Atlassian tools to create the issues
+4. Include the tracker document as the source-of-truth reference
+
+## Follow-Up Questions
+
+- Should I create Jira tickets for these action items?
+- Are there items from previous meetings that should be carried forward?
+- Who should receive this tracker (just you, or the full team)?
+- Do you want me to draft follow-up messages for overdue items?
+- Should I set up a recurring check-in to update statuses?
