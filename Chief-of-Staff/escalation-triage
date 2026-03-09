@@ -1,0 +1,109 @@
+# Escalation Triage
+
+## When to Use
+Customer complaints, system-down events, "fire drills," churn threats, executive-to-executive escalations, or any situation where urgency and stakes are both high. Also use when the principal says "how do I handle this" about a sensitive situation.
+
+## Triage Framework
+
+### Step 1: Classify Severity
+
+| Level | Signal | Response Time | Who's Involved |
+|-------|--------|--------------|----------------|
+| **SEV-1: Critical** | System down, data loss, public safety impact, exec-to-exec complaint | Immediate | Principal + Engineering + Customer Success + Leadership |
+| **SEV-2: High** | Major feature broken, customer threatening churn, contract at risk | Same day | Principal + Product + Customer Success |
+| **SEV-3: Medium** | Feature request escalated, dissatisfaction with timeline, competitive threat | 24-48 hours | Principal + relevant PM/PO |
+| **SEV-4: Low** | General feedback, minor issue amplified, informational | This week | Delegate to appropriate owner |
+
+### Step 2: Gather Intel (Before Responding)
+
+Before the principal communicates with anyone, assemble:
+
+- **What happened** (technical facts, not opinions)
+- **Who's affected** (specific customer, how many users, what workflows)
+- **What we've already done** (any triage steps, workarounds deployed)
+- **What we know and don't know** (be explicit about gaps)
+- **Customer's emotional state** (frustrated, angry, panicked, threatening)
+- **History** (is this a repeat issue? prior escalations? relationship health?)
+- **Contract/revenue context** (contract value, renewal date, expansion opportunity)
+
+### Step 3: Produce the Escalation Package
+
+For SEV-1 and SEV-2, produce a multi-document package:
+
+1. **Escalation Brief** (1-page internal document)
+   - Same structure as Executive Briefing but compressed: Issue → Impact → Current Status → Next Steps → Timeline
+   - Include severity classification prominently
+
+2. **Customer Talking Points** (for whoever is calling/meeting the customer)
+   - Opening acknowledgment
+   - What we know so far
+   - What we're doing right now
+   - When they'll hear from us next
+   - What NOT to say (land mines)
+
+3. **Internal Notification** (email draft to leadership)
+   - Subject line includes severity and customer name
+   - 3-sentence summary: what, who's affected, what we're doing
+   - Who's on point
+   - Next update timeline
+
+4. **Handoff Note** (if the primary owner is unavailable)
+
+## Escalation Communication Rules
+
+- **Acknowledge first, solve second.** The customer needs to feel heard before they can hear solutions.
+- **Never speculate on root cause with the customer.** Say "we're investigating" until you know for certain.
+- **Commit to an update cadence, not a fix date.** "I'll update you by 3pm today" is better than "we'll fix this by Friday" when you're not sure.
+- **Escalate internally faster than you think you need to.** It's always better for leadership to hear about a problem from you than from the customer.
+- **Document everything in real time.** Escalations become case studies, contract negotiations, and sometimes legal matters.
+
+## Escalation Brief Structure (Compressed)
+
+```
+ESCALATION BRIEF — [SEVERITY LEVEL]
+[Customer Name] — [Issue Title]
+
+Date: | Owner: | Status: Active/Monitoring/Resolved
+
+SITUATION (3 sentences: what happened, who's affected, current state)
+
+IMPACT (quantified if possible: users affected, revenue at risk, SLA implications)
+
+CURRENT STATUS
+  - What we've done so far
+  - What's in progress right now
+  - What we're blocked on (if anything)
+
+NEXT STEPS (with owners and times)
+  1. [Action] — [Owner] — [By when]
+  2. [Action] — [Owner] — [By when]
+
+CUSTOMER COMMUNICATION
+  - Last contact: [when, who, what was said]
+  - Next scheduled contact: [when]
+  - Customer sentiment: [Frustrated / Angry / Understanding / Threatening]
+
+ESCALATION CHAIN
+  - Technical: [name]
+  - Customer Success: [name]
+  - Executive Sponsor: [name]
+```
+
+## De-Escalation Signals
+
+When the situation is resolving, help the principal recognize when to shift from crisis mode to relationship repair:
+
+- Customer tone softens (from demands to questions)
+- Technical root cause identified and fix deployed
+- Customer agrees to a next step (even a small one)
+- Internal team has breathing room
+
+At this point, shift to producing a **post-mortem brief** and a **relationship recovery plan** (what proactive goodwill gesture makes sense — early access to a feature, executive check-in call, etc.).
+
+## Follow-Up Questions
+
+- Do I have the full picture, or is there information from other teams I should pull in?
+- Who is the executive sponsor for this customer?
+- Has this customer escalated before? Should I search past conversations for history?
+- Do you want me to draft the customer communication or just the internal brief?
+- Is there a contract renewal coming up that makes this more sensitive?
