@@ -1,0 +1,143 @@
+# Board & Investor Prep
+
+## When to Use
+Preparing for board meetings, investor updates, executive committee reviews, advisory board sessions, analyst briefings, or any presentation to governance-level or capital-level audiences. Also use when the principal is asked to contribute a section to a broader board package or when leadership says "the board wants to know about X."
+
+## Key Principle
+
+Board and investor audiences operate at a fundamentally different altitude than operational teams or even senior leadership. They care about three things: **trajectory** (are we winning?), **risk** (what could derail us?), and **capital allocation** (are we spending wisely?). Every word in a board deliverable should map to one of these.
+
+## Board Update Structure
+
+```
+BOARD UPDATE
+[Business Unit / Product Portfolio] — [Period]
+
+Metadata: Date, Author, Reporting Period, Classification (Board Confidential)
+
+Executive Summary
+  - 3-4 sentences max. The entire story at the highest altitude.
+  - Lead with the single most important thing: a win, a risk, or a strategic shift.
+
+Strategic Scorecard
+  - Table with 4-6 key metrics, each showing: Current | Prior Period | Target | Trend (↑↓→)
+  - Metrics should be outcomes, not activities (revenue, adoption, retention, NPS — not sprint velocity)
+
+Portfolio Highlights
+  - 2-3 bullet points per product/workstream: what moved, what matters
+  - Bold the "so what" — the board doesn't need to know the feature name, they need to know the customer impact
+
+Market & Competitive Position
+  - Any competitive developments worth noting (1-2 sentences each)
+  - Market trends that affect strategy
+  - Win/loss summary if relevant
+
+Risks & Mitigations
+  - Top 2-3 risks (not a laundry list)
+  - Each risk gets: Description | Likelihood | Impact | Mitigation | Owner
+  - Be direct about what's real. Boards lose trust when risks are hidden.
+
+Strategic Decisions / Asks
+  - Anything requiring board input, approval, or awareness
+  - Frame as: "We recommend X because Y. The trade-off is Z."
+
+Forward Look
+  - Next quarter priorities (3-5 max)
+  - Key milestones and dates
+  - Resource or investment needs on the horizon
+```
+
+## Investor Update Structure
+
+For investor-facing communications (quarterly updates, fundraising materials, due diligence support):
+
+```
+INVESTOR UPDATE — [Period]
+
+Headline Metrics (the 3-4 numbers that define the business)
+  - ARR / Revenue
+  - Customer count / growth
+  - Net retention / churn
+  - Key operational metric (e.g., calls for service processed)
+
+Narrative (1 page max)
+  - What happened this quarter (wins, milestones, launches)
+  - What's working (product-market fit signals, expansion deals)
+  - What's challenging (honest, with context — investors respect candor)
+  - What's next (upcoming catalysts, strategic priorities)
+
+Financial Summary (if appropriate)
+  - Revenue vs. plan
+  - Burn rate / runway (if relevant)
+  - Key investment areas
+
+Product & Technology Update
+  - Major releases and their customer impact
+  - Platform/infrastructure milestones
+  - Innovation pipeline (without giving away competitive secrets)
+```
+
+## Writing Rules for Board/Investor Content
+
+- **Altitude, altitude, altitude.** If you're explaining how a feature works, you're too deep. Explain what it means for the business.
+- **Numbers tell the story.** Every slide or section should have at least one quantified metric. "Strong growth" means nothing. "27% YoY growth, adding 43 agencies" means everything.
+- **Trends matter more than snapshots.** Show direction: this quarter vs. last, this year vs. last year, actual vs. target.
+- **Risks are credibility builders.** A board update with no risks signals either naivety or dishonesty. Include real risks with real mitigations.
+- **One page per topic.** Board members are reading 200+ pages of materials across all their commitments. Respect their time ruthlessly.
+- **No jargon.** Board members may not know what "CAD" stands for. Spell it out on first use and prefer plain language throughout. "Computer-Aided Dispatch — the software 911 centers use to manage emergency calls" on first mention, then "dispatch software" thereafter.
+- **Strategic, not operational.** "We shipped 47 PBIs this sprint" is operational. "We delivered the mobile platform to general availability, enabling officers to run full queries from the field" is strategic.
+
+## Strategic Scorecard Format
+
+6-column table: Metric | Current | Prior | Target | Trend | Notes
+
+Column widths: [2200, 1400, 1400, 1400, 800, 2160] = 9360
+
+Trend indicators:
+- **↑** Green text (#1B7A3D) — improving, on/above target
+- **→** Amber text (#B8860B) — flat, watch closely
+- **↓** Red text (#C62828) — declining, needs attention
+
+Highlight any metric that is significantly above or below target with cell background shading (green or red respectively).
+
+## Risk Table Format
+
+5-column table: Risk | Likelihood | Impact | Mitigation | Owner
+
+Column widths: [2800, 1100, 1100, 3060, 1300] = 9360
+
+Likelihood/Impact values: High / Medium / Low
+- High/High: Red cell shading
+- High/Medium or Medium/High: Yellow cell shading
+- Everything else: No shading
+
+## Board vs. Leadership vs. Team — Altitude Guide
+
+| Element | Board Level | Leadership Level | Team Level |
+|---------|------------|-----------------|------------|
+| Metric example | "ARR grew 18% to $42M" | "Enterprise CAD added 12 agencies this quarter" | "We closed 47 PBIs and shipped v25.1" |
+| Risk example | "Key customer concentration risk: top 5 accounts = 30% of revenue" | "Chicago deployment is at risk of delay; mitigation plan in place" | "Chicago UAT blocked on API integration; Kendrick investigating" |
+| Win example | "Mobile platform reached GA, opening $8M TAM in field operations" | "Mobile X launched on iOS and Android with 6 agencies in pilot" | "Mobile X v3.2 shipped with offline query support" |
+| Ask example | "Requesting $2M incremental investment in cloud infrastructure" | "Need engineering headcount approval for Q3" | "Need 2 sprint cycles allocated to tech debt" |
+
+## Appendix / Backup Slides
+
+Board packages often need an appendix with deeper detail for reference. Structure:
+
+- **Detailed financials** (if the summary raised questions)
+- **Customer case studies** (1-pager per key win)
+- **Competitive landscape detail** (the full battle card, not the summary)
+- **Product roadmap** (high-level, 4-quarter view)
+- **Org chart / team updates** (if relevant to the discussion)
+
+These go at the end and are "break glass in case of questions" materials.
+
+## Follow-Up Questions
+
+- What's the specific board meeting agenda — are you presenting or contributing a section?
+- What's the board's current temperature on our business unit? (Supportive, scrutinizing, concerned?)
+- Are there specific questions or concerns from the last board meeting that need follow-up?
+- Should I pull metrics from Jira or other systems to populate the scorecard?
+- Is this a standalone update or part of a larger company-wide board package?
+- Do you need a presentation deck (pptx) in addition to or instead of a document?
+- Are there any topics the CEO or CFO has flagged as "definitely cover this"?
