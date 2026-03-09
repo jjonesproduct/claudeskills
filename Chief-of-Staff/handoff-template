@@ -1,0 +1,378 @@
+# Handoff Note Template
+
+This is the JavaScript template for generating the handoff note `.docx` file using `docx-js`. The handoff note is designed so someone can walk into a customer conversation cold and be fully prepared.
+
+## Template Code
+
+```javascript
+const fs = require("fs");
+const {
+  Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell,
+  Header, Footer, AlignmentType, LevelFormat,
+  HeadingLevel, BorderStyle, WidthType, ShadingType,
+  PageNumber, TabStopType
+} = require("docx");
+
+// ============================================================
+// BRAND COLORS (same as briefing)
+// ============================================================
+const CS_DARK = "1E2A3A";
+const CS_ORANGE = "ED591F";
+const CS_GRAY = "333333";
+const CS_MID_GRAY = "666666";
+const CS_BORDER = "CCCCCC";
+const CS_LIGHT_GRAY = "F0F2F5";
+const CS_ACCENT_BG = "FFF0EB";
+const CS_GREEN_BG = "E8F5E9";
+const CS_RED_BG = "FFEBEE";
+const CS_GREEN_TEXT = "1B7A3D";
+const CS_RED_TEXT = "C62828";
+
+const border = { style: BorderStyle.SINGLE, size: 1, color: CS_BORDER };
+const borders = { top: border, bottom: border, left: border, right: border };
+const cellMargins = { top: 80, bottom: 80, left: 120, right: 120 };
+
+// ============================================================
+// HELPER FUNCTIONS
+// ============================================================
+
+function sectionBar(text) {
+  return new Paragraph({
+    spacing: { before: 300, after: 120 },
+    border: { bottom: { style: BorderStyle.SINGLE, size: 4, color: CS_ORANGE, space: 4 } },
+    children: [new TextRun({ text, font: "Arial", size: 26, bold: true, color: CS_DARK })]
+  });
+}
+
+function body(text) {
+  return new Paragraph({
+    spacing: { after: 140, line: 276 },
+    children: [new TextRun({ text, font: "Arial", size: 22, color: CS_GRAY })]
+  });
+}
+
+function boldBody(b, n) {
+  return new Paragraph({
+    spacing: { after: 140, line: 276 },
+    children: [
+      new TextRun({ text: b, font: "Arial", size: 22, bold: true, color: CS_DARK }),
+      new TextRun({ text: n, font: "Arial", size: 22, color: CS_GRAY }),
+    ]
+  });
+}
+
+function boldBullet(b, n, ref = "bullets") {
+  return new Paragraph({
+    numbering: { reference: ref, level: 0 },
+    spacing: { after: 80, line: 276 },
+    children: [
+      new TextRun({ text: b, font: "Arial", size: 22, bold: true, color: CS_DARK }),
+      new TextRun({ text: n, font: "Arial", size: 22, color: CS_GRAY }),
+    ]
+  });
+}
+
+function numberedAction(boldText, normalText, ref = "numbers") {
+  return new Paragraph({
+    numbering: { reference: ref, level: 0 },
+    spacing: { after: 100, line: 276 },
+    children: [
+      new TextRun({ text: boldText, font: "Arial", size: 22, bold: true, color: CS_DARK }),
+      new TextRun({ text: normalText, font: "Arial", size: 22, color: CS_GRAY }),
+    ]
+  });
+}
+
+// TL;DR callout box — orange left border, light orange background
+function calloutBox(children) {
+  return new Table({
+    width: { size: 9360, type: WidthType.DXA },
+    columnWidths: [9360],
+    rows: [
+      new TableRow({
+        children: [
+          new TableCell({
+            borders: {
+              top: { style: BorderStyle.SINGLE, size: 1, color: CS_ORANGE },
+              bottom: { style: BorderStyle.SINGLE, size: 1, color: CS_ORANGE },
+              left: { style: BorderStyle.SINGLE, size: 12, color: CS_ORANGE },
+              right: { style: BorderStyle.SINGLE, size: 1, color: CS_ORANGE },
+            },
+            width: { size: 9360, type: WidthType.DXA },
+            shading: { fill: CS_ACCENT_BG, type: ShadingType.CLEAR },
+            margins: { top: 120, bottom: 120, left: 200, right: 200 },
+            children,
+          })
+        ]
+      })
+    ]
+  });
+}
+
+// Metadata row helper
+function metaRow(label, value) {
+  return new TableRow({
+    children: [
+      new TableCell({ borders, width: { size: 2200, type: WidthType.DXA },
+        shading: { fill: CS_LIGHT_GRAY, type: ShadingType.CLEAR }, margins: cellMargins,
+        children: [new Paragraph({ children: [new TextRun({ text: label, font: "Arial", size: 20, bold: true, color: CS_DARK })] })] }),
+      new TableCell({ borders, width: { size: 7160, type: WidthType.DXA }, margins: cellMargins,
+        children: [new Paragraph({ children: [new TextRun({ text: value, font: "Arial", size: 20, color: CS_GRAY })] })] }),
+    ]
+  });
+}
+
+// ============================================================
+// DOCUMENT
+// ============================================================
+
+const doc = new Document({
+  styles: {
+    default: { document: { run: { font: "Arial", size: 22 } } },
+  },
+  numbering: {
+    config: [
+      { reference: "bullets",
+        levels: [{ level: 0, format: LevelFormat.BULLET, text: "\u2022", alignment: AlignmentType.LEFT,
+          style: { paragraph: { indent: { left: 720, hanging: 360 } } } }] },
+      { reference: "numbers",
+        levels: [{ level: 0, format: LevelFormat.DECIMAL, text: "%1.", alignment: AlignmentType.LEFT,
+          style: { paragraph: { indent: { left: 720, hanging: 360 } } } }] },
+    ]
+  },
+  sections: [{
+    properties: {
+      page: {
+        size: { width: 12240, height: 15840 },
+        margin: { top: 1440, right: 1440, bottom: 1440, left: 1440 }
+      }
+    },
+    headers: {
+      default: new Header({
+        children: [
+          new Paragraph({
+            border: { bottom: { style: BorderStyle.SINGLE, size: 4, color: CS_ORANGE, space: 4 } },
+            children: [
+              new TextRun({ text: "INTERNAL HANDOFF NOTE", font: "Arial", size: 16, bold: true, color: CS_DARK }),
+              new TextRun({ text: "  |  ", font: "Arial", size: 16, color: CS_BORDER }),
+              new TextRun({ text: "{{TOPIC}}", font: "Arial", size: 16, color: CS_MID_GRAY }),
+            ]
+          })
+        ]
+      })
+    },
+    footers: {
+      default: new Footer({
+        children: [
+          new Paragraph({
+            border: { top: { style: BorderStyle.SINGLE, size: 2, color: CS_BORDER, space: 4 } },
+            tabStops: [{ type: TabStopType.RIGHT, position: 9360 }],
+            children: [
+              new TextRun({ text: "Confidential \u2014 Internal Use Only", font: "Arial", size: 16, color: CS_MID_GRAY }),
+              new TextRun({ children: ["\t"], font: "Arial" }),
+              new TextRun({ text: "Page ", font: "Arial", size: 16, color: CS_MID_GRAY }),
+              new TextRun({ children: [PageNumber.CURRENT], font: "Arial", size: 16, color: CS_MID_GRAY }),
+            ]
+          })
+        ]
+      })
+    },
+    children: [
+      // ======== TITLE ========
+      new Paragraph({
+        spacing: { after: 40 },
+        children: [new TextRun({ text: "HANDOFF NOTE", font: "Arial", size: 38, bold: true, color: CS_DARK })]
+      }),
+      new Paragraph({
+        spacing: { after: 200 },
+        children: [new TextRun({ text: "{{TOPIC}} \u2014 For {{RECIPIENTS}}", font: "Arial", size: 24, color: CS_ORANGE })]
+      }),
+
+      // ======== METADATA TABLE ========
+      new Table({
+        width: { size: 9360, type: WidthType.DXA },
+        columnWidths: [2200, 7160],
+        rows: [
+          metaRow("From", "{{FROM_NAME_AND_TITLE}}"),
+          metaRow("Date", "{{DATE}}"),
+          metaRow("Coverage Needed", "{{COVERAGE_DATES}}"),
+          metaRow("Key Contacts", "{{KEY_CONTACTS}}"),
+          metaRow("Reference Doc", "{{REFERENCE_DOC_TITLE}}"),
+        ]
+      }),
+
+      new Paragraph({ spacing: { after: 80 }, children: [] }),
+
+      // ======== TL;DR CALLOUT ========
+      // This is the most important element. If the reader reads nothing
+      // else, this one paragraph tells them everything.
+      calloutBox([
+        new Paragraph({
+          spacing: { after: 80 },
+          children: [new TextRun({ text: "TL;DR", font: "Arial", size: 22, bold: true, color: CS_ORANGE })]
+        }),
+        new Paragraph({
+          spacing: { after: 0, line: 276 },
+          children: [new TextRun({ text: "{{TLDR_PARAGRAPH}}", font: "Arial", size: 22, color: CS_GRAY })]
+        }),
+      ]),
+
+      // ======== WHAT HAPPENED ========
+      sectionBar("What Happened"),
+      body("{{WHAT_HAPPENED}}"),
+
+      // ======== THE FIX ========
+      sectionBar("The Fix (Already In Motion)"),
+      body("{{FIX_DESCRIPTION}}"),
+      boldBody("Key fact: ", "{{KEY_FACT}}"),
+
+      // ======== WHAT YOU MIGHT NEED TO DO ========
+      sectionBar("What You Might Need to Do"),
+      // Add numberedAction() calls for each action item:
+      // numberedAction("Action label: ", "Description of what to do and when."),
+
+      // ======== OBJECTION CHEAT SHEET ========
+      // "They Say / You Say" two-column table
+      sectionBar("Objection Handling Cheat Sheet"),
+      // Build table with header row + one row per objection.
+      // Left column: customer objection (italic, orange, bold)
+      // Right column: recommended response (normal gray text)
+      //
+      // Pattern:
+      // new Table({
+      //   width: { size: 9360, type: WidthType.DXA },
+      //   columnWidths: [3200, 6160],
+      //   rows: [
+      //     headerRow ("They Say..." | "You Say..."),
+      //     ...objectionRows
+      //   ]
+      // })
+
+      new Paragraph({ spacing: { after: 80 }, children: [] }),
+
+      // ======== DO'S AND DON'TS ========
+      // Two-column table: green left (Do), red right (Don't)
+      sectionBar("Quick Do\u2019s and Don\u2019ts"),
+      // Pattern:
+      // Header row: green "✓ DO" | red "✗ DON'T"
+      // Data rows: plain text in each column
+      //
+      // Use CS_GREEN_BG / CS_RED_BG for header cell shading
+      // Use CS_GREEN_TEXT / CS_RED_TEXT for header text color
+
+      new Paragraph({ spacing: { after: 80 }, children: [] }),
+
+      // ======== ESCALATION PATH ========
+      sectionBar("If Things Go Sideways"),
+      body("{{ESCALATION_INTRO}}"),
+      // Add boldBullet() calls for escalation steps:
+      // boldBullet("Action ", "details."),
+
+      // ======== PERSONAL SIGN-OFF ========
+      new Paragraph({
+        spacing: { before: 400 },
+        border: { top: { style: BorderStyle.SINGLE, size: 2, color: CS_BORDER, space: 8 } },
+        children: []
+      }),
+      new Paragraph({
+        spacing: { before: 80, after: 40 },
+        children: [
+          new TextRun({ text: "{{SIGNOFF_MESSAGE}}", font: "Arial", size: 22, italics: true, color: CS_MID_GRAY })
+        ]
+      }),
+    ]
+  }]
+});
+
+Packer.toBuffer(doc).then(buffer => {
+  fs.writeFileSync("/home/claude/{{FILENAME}}_Handoff_Note.docx", buffer);
+  console.log("Handoff note created.");
+});
+```
+
+## Key Patterns
+
+### TL;DR Callout Box
+
+The callout box uses a single-cell table with a thick orange left border. It should contain the entire situation in one dense paragraph — assume the reader will skim everything else.
+
+```javascript
+calloutBox([
+  new Paragraph({
+    spacing: { after: 80 },
+    children: [new TextRun({ text: "TL;DR", font: "Arial", size: 22, bold: true, color: CS_ORANGE })]
+  }),
+  new Paragraph({
+    spacing: { after: 0, line: 276 },
+    children: [new TextRun({ text: "Full situation summary in one paragraph.", font: "Arial", size: 22, color: CS_GRAY })]
+  }),
+])
+```
+
+### Objection Table Rows
+
+Each objection row follows this pattern:
+
+```javascript
+new TableRow({
+  children: [
+    new TableCell({ borders, width: { size: 3200, type: WidthType.DXA }, margins: cellMargins,
+      children: [new Paragraph({ children: [
+        new TextRun({ text: "\u201CCustomer objection.\u201D", font: "Arial", size: 20, bold: true, italics: true, color: CS_ORANGE })
+      ] })] }),
+    new TableCell({ borders, width: { size: 6160, type: WidthType.DXA }, margins: cellMargins,
+      children: [new Paragraph({ spacing: { line: 260 }, children: [
+        new TextRun({ text: "Your response.", font: "Arial", size: 20, color: CS_GRAY })
+      ] })] }),
+  ]
+})
+```
+
+### Do's and Don'ts Table
+
+Two-column table with color-coded headers:
+
+```javascript
+// Header row
+new TableRow({
+  children: [
+    new TableCell({ borders, width: { size: 4680, type: WidthType.DXA },
+      shading: { fill: CS_GREEN_BG, type: ShadingType.CLEAR }, margins: cellMargins,
+      children: [new Paragraph({ children: [
+        new TextRun({ text: "\u2713  DO", font: "Arial", size: 20, bold: true, color: CS_GREEN_TEXT })
+      ] })] }),
+    new TableCell({ borders, width: { size: 4680, type: WidthType.DXA },
+      shading: { fill: CS_RED_BG, type: ShadingType.CLEAR }, margins: cellMargins,
+      children: [new Paragraph({ children: [
+        new TextRun({ text: "\u2717  DON\u2019T", font: "Arial", size: 20, bold: true, color: CS_RED_TEXT })
+      ] })] }),
+  ]
+}),
+// Data rows: plain text, no shading
+```
+
+### Escalation Path
+
+Always end with a clear escalation path. Use bold-lead bullets:
+
+```javascript
+boldBullet("Thank them ", "for their time and feedback."),
+boldBullet("Commit ", "to bringing the right team together within 24 hours."),
+boldBullet("Loop in {{EXEC_SPONSOR}} ", "immediately — they're the executive sponsor."),
+boldBullet("Reach out to me ", "({{OWNER}}) — I'll be on PTO but available for urgent calls."),
+```
+
+### Personal Sign-Off
+
+Keep it human and brief. This is from a colleague, not a system:
+
+```javascript
+new Paragraph({
+  children: [
+    new TextRun({
+      text: "Thanks for covering this. You've got it. \u2014 {{FIRST_NAME}}",
+      font: "Arial", size: 22, italics: true, color: CS_MID_GRAY
+    })
+  ]
+})
+```
